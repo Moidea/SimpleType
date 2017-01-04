@@ -8,6 +8,10 @@ function themeConfig($form) {
 	$sologn = new Typecho_Widget_Helper_Form_Element_Text('sologn', NULL, NULL, _t('网站顶部标题后面的标语'), _t('<strong>用来显示在网站顶部标题后面的标语</strong>'));
     $form->addInput($sologn);
 	
+	/** 手机版底部电话 */
+	$tel = new Typecho_Widget_Helper_Form_Element_Text('tel', NULL, NULL, _t('联系电话'), _t('<strong>将显示在手机版底部</strong>'));
+    $form->addInput($tel);
+	
 	/** 站长支付宝二维码 */
 	$alipay = new Typecho_Widget_Helper_Form_Element_Text('alipay', NULL, NULL, _t('文章底部的支付宝捐赠二维码'), _t('<strong>文章底部的支付宝捐赠二维码</strong>'));
     $form->addInput($alipay);
@@ -16,11 +20,12 @@ function themeConfig($form) {
 	$weixin = new Typecho_Widget_Helper_Form_Element_Text('weixin', NULL, NULL, _t('文章底部的微信捐赠二维码'), _t('<strong>文章底部的微信捐赠二维码</strong>'));
     $form->addInput($weixin);
 	
+	/** 网站统计代码 */
+	$block01 = new Typecho_Widget_Helper_Form_Element_Textarea('block01', NULL, NULL, _t('网站统计代码'), _t('<strong>将网站统计代码复制到此处</strong>'));
+    $form->addInput($block01);
 }
 
-/**
- * 获取文章开头作为描述
- */
+// 获取文章摘要
 function getPostDesc($obj){
 	$code=array(" ","　","\t","\n","\r");
 	$post=str_replace($code, '', strip_tags($obj->content)); 
@@ -32,14 +37,8 @@ function getPostDesc($obj){
 }  
 
 
-/**
- * 秒转时间，格式 年 月 日 时 分 秒
- * 
- * @author Roogle
- * @return html
- */
+// 本站创建的时间
 function getBuildTime(){
-	// 本站创建的时间
 	$site_create_time = strtotime('2012-06-26 00:00:00');
 	$time = time() - $site_create_time;
 	
@@ -73,9 +72,7 @@ function getBuildTime(){
 }
 
 
-/**
- * 分类文章数量控制 
- */
+// 分类文章数量控制 
 function themeInit($archive) { 
     if ($archive->is('index')) { 
         $archive->parameter->pageSize = 16; // 自定义条数 
@@ -98,6 +95,7 @@ function themeInit($archive) {
 	}
 }
 
+// 手机端判断
 function isMobile()
 { 
     // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
@@ -165,13 +163,3 @@ function isMobile()
     } 
     return false;
 } 
-
-
-// 图片转化为base64编码
-function base64EncodeImage ($image_file) {
-    $base64_image = '';
-    $image_info = getimagesize($image_file);
-    $image_data = fread(fopen($image_file, 'r'), filesize($image_file));
-    $base64_image = 'data:' . $image_info['mime'] . ';base64,' . chunk_split(base64_encode($image_data));
-    return $base64_image;
-}
