@@ -1,10 +1,10 @@
 <?php
 /**
- * 超简洁的typecho皮肤SIMPLETYPE 4.1
+ * 超简洁的typecho皮肤SIMPLETYPE 4.2
  * 
  * @package SimpleType
  * @author Roogle
- * @version 4.1
+ * @version 4.2
  * @link http://www.moidea.info
  */
  
